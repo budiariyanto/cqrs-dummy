@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  datasource: root:12345@tcp(localhost:32771)/katresnan?parseTime=true
+  dir: migration/sql/katresnan
+  table: migrations

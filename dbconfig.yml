@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  datasource: root:12345@tcp(localhost:32771)/denormalizer?parseTime=true
+  dir: migration/sql/denormalizer
+  table: migrations

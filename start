@@ -1,0 +1,11 @@
+#!/bin/bash
+mkdir -p pids
+
+for d in consumer_*/ ; do
+    cd $d
+    ./consumer&
+    touch ../pids/$!
+    cd ..
+done
+
+./cqrs-dummy

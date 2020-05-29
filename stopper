@@ -1,0 +1,8 @@
+#!/bin/bash
+cd pids
+
+for d in * ; do
+   echo "Killing $d"
+   kill -9 $d
+   rm $d
+done

@@ -1,0 +1,5 @@
+development:
+  dialect: mysql
+  datasource: root:12345@tcp(localhost:32771)/campaignership?parseTime=true
+  dir: migration/sql/campaignership
+  table: migrations

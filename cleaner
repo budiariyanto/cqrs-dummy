@@ -1,0 +1,9 @@
+#!/bin/bash
+
+rm cqrs-dummy
+
+for d in */ ; do
+    cd $d
+    rm consumer
+    cd ..
+done
