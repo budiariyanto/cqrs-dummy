@@ -16,11 +16,13 @@ import (
 func (h *Handler) CreateDonation(c echo.Context) (err error) {
 	d := new(payloads.DonationReq)
 	if err = c.Bind(d); err != nil {
+		fmt.Println("Bind error:", err)
 		return
 	}
 	
 	campaignDetail, err := h.DenormalizeSvc.GetCampaignDetail(d.CampaignID)
 	if err != nil {
+		fmt.Println("Campaign detail error:", err)
 		return
 	}
 
@@ -34,6 +36,7 @@ func (h *Handler) CreateDonation(c echo.Context) (err error) {
 
 	v, err := json.Marshal(msg)
 	if err != nil {
+		fmt.Println("Marshal error:", err)
 		return
 	}
 
@@ -46,11 +49,10 @@ func (h *Handler) CreateDonation(c echo.Context) (err error) {
 
 	err = kafkaWriter.WriteMessages(context.Background(), kmsg)
 	if err != nil {
+		fmt.Println("Write kafka mesage error:", err)
 		return
 	}
 
-	fmt.Println(err)
-	
 	kafkaWriter.Close()
 
 	return c.JSON(http.StatusOK, d)

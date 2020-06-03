@@ -2,6 +2,7 @@ package common
 
 import (
 	kafka "github.com/segmentio/kafka-go"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 	"time"
 	"fmt"
@@ -9,7 +10,7 @@ import (
 
 func NewKafkaWriter() *kafka.Writer {
 	w := kafka.NewWriter(kafka.WriterConfig{
-		Brokers: []string{"localhost:32772"},
+		Brokers: []string{"localhost:9092"},
 		Topic:   "donation-create",
 		Balancer: &kafka.LeastBytes{},
 	})
@@ -19,7 +20,7 @@ func NewKafkaWriter() *kafka.Writer {
 
 func NewKafkaReader(group, topic string) *kafka.Reader {
 	return kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   []string{"localhost:32772"},
+		Brokers:   []string{"localhost:9092"},
 		// GroupID:   "group2",
 		// Topic:     "donation-create",
 		GroupID:   group,

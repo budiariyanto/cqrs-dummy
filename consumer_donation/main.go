@@ -7,26 +7,16 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"time"
 
 	"github.com/budiariyanto/cqrs-dummy/common"
 	"github.com/budiariyanto/cqrs-dummy/model"
 	"github.com/budiariyanto/cqrs-dummy/payloads"
 	"github.com/budiariyanto/cqrs-dummy/repo"
 	"github.com/budiariyanto/cqrs-dummy/service"
-	kafka "github.com/segmentio/kafka-go"
 )
 
 func main() {
-	r := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   []string{"localhost:32772"},
-		GroupID:   "group1",
-		Topic:     "donation-create",
-		ReadBackoffMin: 50*time.Millisecond,
-		ReadBackoffMax: 500*time.Millisecond,
-		MinBytes:  10e1, // 1KB
-		MaxBytes:  10e6, // 10MB
-	})
+	r := common.NewKafkaReader("group1", "donation-create")
 
 	fmt.Println("Starting consumer donation...")
 
@@ -74,6 +64,7 @@ func main() {
 		
 		client := http.DefaultClient
 		req, _ := http.NewRequest("PUT", "http://localhost:1323/campaign-detail/update-total-donation", bytes.NewBuffer(buf))
+		req.Header.Add("Content-Type", "application/json")
 		res, err := client.Do(req)
 		if err != nil {
 			fmt.Println(err)

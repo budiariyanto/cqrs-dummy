@@ -32,6 +32,6 @@ func (d *DenormalizeRepo) UpdateDonatonStatus(campaignID int64, status bool, rea
 }
 
 func (d *DenormalizeRepo) UpdateTotalDonation(campaignID, totalDonation int64) (err error) {
-	_, err = d.db.Exec(`UPDATE campaign_detail SET total_donation = ? WHERE campaign_id = ?`, totalDonation, campaignID)
+	_, err = d.db.Exec(`UPDATE campaign_detail SET total_donation = ? WHERE id = ?`, totalDonation, campaignID)
 	return
 }
